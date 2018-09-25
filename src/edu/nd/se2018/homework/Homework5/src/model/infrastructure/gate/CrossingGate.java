@@ -1,9 +1,13 @@
-package edu.nd.sarec.railwaycrossing.model.infrastructure.gate;
+package model.infrastructure.gate;
 
 import java.util.Observable;
+
+
+
 import java.util.Observer;
 
-import edu.nd.sarec.railwaycrossing.model.vehicles.Train;
+import model.infrastructure.Direction;
+import model.vehicles.Train;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -28,10 +32,14 @@ public class CrossingGate extends Observable implements Observer{
 	private IGateState gateClosing;
 	private IGateState gateOpening;
 	private IGateState currentGateState;
+	private boolean approachingW;
+	private boolean approachingE;
+	
 	private Line line; 
 	private Pane root;
 	
 	String gateName;
+	
 	
 	public CrossingGate(){}
 	
@@ -55,6 +63,8 @@ public class CrossingGate extends Observable implements Observer{
 		gateClosing = new GateClosing(this);
 		currentGateState = gateOpen;
 		gateName = crossingGate;
+		approachingW = false;
+		approachingE = false;
 	}
 	
 	public Line getGateLine(){
@@ -74,7 +84,7 @@ public class CrossingGate extends Observable implements Observer{
 			line.setEndX(movingX);
 			line.setEndY(movingY);
 		} else {
-			currentGateState.gateFinishedOpening();
+			currentGateState.gateFinishedClosing();
 		}
 	}
 	
@@ -114,16 +124,30 @@ public class CrossingGate extends Observable implements Observer{
 	public String getTrafficCommand(){
 		return currentGateState.getTrafficAction();
 	}
+
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o instanceof Train){
 			Train train = (Train)o;
-			if (train.getVehicleX() < exitPoint)
-				currentGateState.leaveStation();
-			else if(train.getVehicleX() < triggerPoint){
+			
+			// update gates on train movements leaving and approaching the station 
+			if (train.getDirection()==Direction.WEST && train.getVehicleX() < exitPoint){
+				approachingW = false;
+				if (!approachingE)
+					currentGateState.leaveStation();
+			} else if (train.getDirection()==Direction.EAST && train.getVehicleX() > triggerPoint){
+				approachingE = false;
+				if (!approachingW)
+					currentGateState.leaveStation();
+			} else if(train.getDirection()==Direction.WEST && train.getVehicleX() < triggerPoint){
+				approachingW = true;
 				currentGateState.approachStation();
-			} 
+			} else if (train.getDirection()==Direction.EAST && train.getVehicleX() > exitPoint){
+				approachingE = true;
+				currentGateState.approachStation();
+			}
+			
 		}	
 	}
 }

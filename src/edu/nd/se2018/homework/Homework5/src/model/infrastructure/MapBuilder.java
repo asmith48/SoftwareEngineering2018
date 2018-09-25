@@ -1,10 +1,11 @@
-package edu.nd.sarec.railwaycrossing.model.infrastructure;
+package model.infrastructure;
 
 import java.awt.Point;
+
 import java.util.Collection;
 import java.util.HashMap;
 
-import edu.nd.sarec.railwaycrossing.model.infrastructure.gate.CrossingGate;
+import model.infrastructure.gate.CrossingGate;
 
 /**
  * Creates all infrastructure for the simulation
@@ -28,9 +29,9 @@ public class MapBuilder {
 	}
 
 	private void buildRoads(){
-		roads.put("Western Highway",new Road(new Point(800,0),new Point (800,1000),Direction.SOUTH,true,false));
-		roads.put("Skyway",new Road(new Point(400,0),new Point (400,1000),Direction.SOUTH,true,false));		
-		roads.put("EastWest",new Road(new Point(415,800),new Point (785,800),Direction.EAST,true,true));	
+		roads.put("Western Highway",new Road("Western Highway",new Point(800,0),new Point (800,1000),Direction.SOUTH,true,false));
+		roads.put("Skyway",new Road("Skyway",new Point(400,0),new Point (400,1000),Direction.SOUTH,true,false));		
+		roads.put("EastWest",new Road("EastWest",new Point(415,800),new Point (785,800),Direction.EAST,true,true));	
 	}
 	
 	private void buildCrossingGates(){
@@ -39,7 +40,8 @@ public class MapBuilder {
 	}
 	
 	private void buildTracks(){
-		tracks.put("Royal", new RailwayTracks(new Point(0,500),new Point(1200,500)));
+		tracks.put("Royal", new RailwayTracks(new Point(0,500),new Point(1200,500),Direction.WEST));
+		tracks.put("Second", new RailwayTracks(new Point(0,532),new Point(1200,532),Direction.EAST));
 	}
 	
 	private void assignGatesToRoads(){
@@ -50,6 +52,7 @@ public class MapBuilder {
 	private void buildCarFactories(){
 		roads.get("Western Highway").addCarFactory();
 		roads.get("Skyway").addCarFactory();
+		roads.get("EastWest").addCarFactory();
 	}
 	
 	public Collection<CrossingGate> getAllGates(){
@@ -60,11 +63,11 @@ public class MapBuilder {
 		return tracks.values();
 	}
 	
-	public Collection<Road> getRoads(){
-		return roads.values();
+	public HashMap<String,Road> getRoads(){
+		return roads;
 	}
 	
 	public RailwayTracks getTrack(String name){
-		return tracks.get("Royal");
+		return tracks.get(name);
 	}
 }

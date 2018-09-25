@@ -1,9 +1,10 @@
-package edu.nd.sarec.railwaycrossing.view;
+package view;
 
 import java.util.Collection;
 
-import edu.nd.sarec.railwaycrossing.model.infrastructure.Direction;
-import edu.nd.sarec.railwaycrossing.model.infrastructure.Road;
+
+import model.infrastructure.Direction;
+import model.infrastructure.Road;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;

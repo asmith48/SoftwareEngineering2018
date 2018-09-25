@@ -1,6 +1,7 @@
-package edu.nd.sarec.railwaycrossing.model.infrastructure;
+package model.infrastructure;
 
 import java.awt.Point;
+
 
 /**
  * Railway Tracks (Entity Object)
@@ -13,14 +14,16 @@ public class RailwayTracks {
 	private int endX;
 	private int startY;
 	private int endY;
+	Direction direction;
 	
 	public RailwayTracks(){}
 	
-	public RailwayTracks(Point startPoint, Point endPoint){
+	public RailwayTracks(Point startPoint, Point endPoint, Direction direction){
 		startX = startPoint.x;
 		startY = startPoint.y;
 		endX = endPoint.x;
 		endY = endPoint.y;
+		this.direction = direction;
 	}
 	
 	public int getStartX(){
@@ -37,6 +40,10 @@ public class RailwayTracks {
 	
 	public int getEndY(){
 		return endY;
+	}
+	
+	public Direction getDirection() {
+		return this.direction;
 	}
 	
 	@Override 

@@ -1,4 +1,4 @@
-package edu.nd.sarec.railwaycrossing.model.infrastructure;
+package model.infrastructure;
 
 public enum Direction {
     NORTH,

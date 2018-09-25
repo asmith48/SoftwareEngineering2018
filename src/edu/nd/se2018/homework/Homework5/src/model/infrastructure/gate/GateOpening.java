@@ -1,15 +1,15 @@
-package edu.nd.sarec.railwaycrossing.model.infrastructure.gate;
+package model.infrastructure.gate;
 
 /**
- * Gate in open state
+ * Gate in opening state
  * @author jane
  *
  */
-public class GateOpen implements IGateState {
-
-	private CrossingGate gate;
+public class GateOpening implements IGateState{
 	
-	protected GateOpen(CrossingGate gate){
+	CrossingGate gate;
+	
+	protected GateOpening(CrossingGate gate){
 		this.gate = gate;
 	}
 
@@ -20,27 +20,29 @@ public class GateOpen implements IGateState {
 
 	@Override
 	public void leaveStation() {
-		// n/a gate already open		
+		// Already opening.		
 	}
 
 	@Override
 	public void gateFinishedOpening() {
-		// n/a gate already open		
+		gate.setGateState(gate.getGateOpenState());
 	}
 
 	@Override
 	public void gateFinishedClosing() {
-		// n/a can't be closing and opened.		
+	    // not reachable except through error.
+		// Raise an alarm!!
 	}
 
 	@Override
 	public void operate() {
-		// Normal operation.  Do nothing.	
+		gate.open();
+		// Flash lights..	
 	}
 	
 	@Override
 	public String getTrafficAction() {
-		return "GO";
+		return "STOP";
 	}
 	
 }

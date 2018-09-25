@@ -1,12 +1,14 @@
-package edu.nd.sarec.railwaycrossing.view;
+package view;
 
 import java.util.ArrayList;
+
+
 import java.util.Collection;
 
-import edu.nd.sarec.railwaycrossing.model.infrastructure.RailwayTracks;
-import edu.nd.sarec.railwaycrossing.model.infrastructure.Road;
-import edu.nd.sarec.railwaycrossing.model.infrastructure.gate.CrossingGate;
-import edu.nd.sarec.railwaycrossing.model.vehicles.Car;
+import model.infrastructure.RailwayTracks;
+import model.infrastructure.Road;
+import model.infrastructure.gate.CrossingGate;
+import model.vehicles.Car;
 import javafx.scene.layout.Pane;
 
 /**
